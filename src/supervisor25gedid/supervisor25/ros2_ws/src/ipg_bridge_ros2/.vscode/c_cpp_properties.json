@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/amin/ros2_ws/install/vehiclecontrol_msgs/include/**",
+        "/home/amin/ros2_ws/install/ackermann_msgs/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/amin/ros2_ws/src/cmrosutils/include/**",
+        "/home/amin/ros2_ws/src/ipg_bridge_ros2/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

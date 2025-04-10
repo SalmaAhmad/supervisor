@@ -1,0 +1,18 @@
+{
+  "python.autoComplete.extraPaths": [
+    "/home/amin/Desktop/formula-carmaker-fs_2024/FCM_Projects/FS_autonomous/ros/ros2_ws/install/vehiclecontrol_msgs/local/lib/python3.10/dist-packages",
+    "/home/amin/Desktop/formula-carmaker-fs_2024/FCM_Projects/FS_autonomous/ros/ros2_ws/install/hellocm_msgs/local/lib/python3.10/dist-packages",
+    "/home/amin/Desktop/formula-carmaker-fs_2024/FCM_Projects/FS_autonomous/ros/ros2_ws/install/cmrosutils/local/lib/python3.10/dist-packages",
+    "/home/amin/Desktop/formula-carmaker-fs_2024/FCM_Projects/FS_autonomous/ros/ros2_ws/install/camera_msgs/local/lib/python3.10/dist-packages",
+    "/opt/ros/humble/lib/python3.10/site-packages",
+    "/opt/ros/humble/local/lib/python3.10/dist-packages"
+  ],
+  "python.analysis.extraPaths": [
+    "/home/amin/Desktop/formula-carmaker-fs_2024/FCM_Projects/FS_autonomous/ros/ros2_ws/install/vehiclecontrol_msgs/local/lib/python3.10/dist-packages",
+    "/home/amin/Desktop/formula-carmaker-fs_2024/FCM_Projects/FS_autonomous/ros/ros2_ws/install/hellocm_msgs/local/lib/python3.10/dist-packages",
+    "/home/amin/Desktop/formula-carmaker-fs_2024/FCM_Projects/FS_autonomous/ros/ros2_ws/install/cmrosutils/local/lib/python3.10/dist-packages",
+    "/home/amin/Desktop/formula-carmaker-fs_2024/FCM_Projects/FS_autonomous/ros/ros2_ws/install/camera_msgs/local/lib/python3.10/dist-packages",
+    "/opt/ros/humble/lib/python3.10/site-packages",
+    "/opt/ros/humble/local/lib/python3.10/dist-packages"
+  ]
+}

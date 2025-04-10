@@ -1,0 +1,28 @@
+{
+    "modules": [
+        {
+            "pkg": "simple_pure_pursuit",
+            "launch_file": "simplePurePursuit.launch.py",
+            "heartbeats_topic": "/status/simple_pure_pursuit",
+            "is_node_msg":true
+
+
+        }
+        
+       
+        ,
+       
+        {
+            "pkg": "planning_acceleration",
+            "launch_file": "acceleration_launch.py",
+            "heartbeats_topic": "status/acceleration",
+            "is_node_msg":true
+        }
+       
+        
+        
+       
+    ]
+
+
+}
