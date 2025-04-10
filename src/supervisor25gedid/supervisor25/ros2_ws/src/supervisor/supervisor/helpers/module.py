@@ -50,6 +50,7 @@ class Module(Node):  # Module should inherit from Node properly
         self.launch_process =None
         self.last_heartbeat_time = self.get_clock().now().seconds_nanoseconds()[0]
         self.heartbeat_count = 0.0
+        self.new_heartbeat_rate=0.0
         try:
             # Ensure package and launch file are not None
             assert self.pkg is not None and self.launchFile is not None
@@ -71,7 +72,7 @@ class Module(Node):  # Module should inherit from Node properly
                 
                 self.heartbeat_rate_thread = IntervalTimer(1, self.update_heartbeat_rate)
                 self.heartbeat_rate_thread.start()  # <-- Start the thread
-                self.get_logger().info("✅ IntervalTimer started for heartbeat monitoring.")
+               # self.get_logger().info("✅ IntervalTimer started for heartbeat monitoring.")
                 self.last_heartbeat_time = self.get_clock().now().seconds_nanoseconds()[0]
                 self.heartbeat_count = 0.0
             except Exception as e:
@@ -87,7 +88,7 @@ class Module(Node):  # Module should inherit from Node properly
         self.shutdown()
         self.launch()
 
-    def shutdown(self) -> None:
+    def shutdownmodule(self) -> None:
         """
         Shuts down the module.
         """
@@ -133,7 +134,7 @@ class Module(Node):  # Module should inherit from Node properly
             time_diff = current_time - self.last_heartbeat_time
             self.last_heartbeat_time = current_time
             
-            self.get_logger().info(f"Time diff: {time_diff}")
+            #self.get_logger().info(f"Time diff: {time_diff}")
             
 
             new_heartbeat_rate = self.heartbeat_count / (time_diff + 0.001)  # Avoid division by zero
@@ -150,11 +151,14 @@ class Module(Node):  # Module should inherit from Node properly
                 self.get_logger().warn("❌ Node marked as UNRESPONSIVE for testing. Restarting...")
                 self.restart()
             """
-            """     
-            if new_heartbeat_rate < 1:
-                self.state = NodeStatus.UNRESPONSIVE
-                self.restart()
-            """
+                 
+            if new_heartbeat_rate < 100000000:
+                #self.get_logger().warn("❌ Node marked as UNRESPONSIVE. Restarting...")
+                self.get_logger().info(f"will now shutdown")
+                #self.state = NodeStatus.UNRESPONSIVE
+                #self.restart()
+                self.shutdownmodule()
+                self.shutdownlaunchfile()
             
         except Exception as e:
             self.get_logger().error(f"Error updating heartbeat rate: {e}")
@@ -164,6 +168,7 @@ class Module(Node):  # Module should inherit from Node properly
         """
         Launch the module using ROS 2 launch files
         """
+        self.get_logger().info(f"Launching module: {self.pkg}/{self.launchFile}")
         self.state = "Starting"
 
         try:
@@ -218,7 +223,7 @@ class Module(Node):  # Module should inherit from Node properly
         except Exception as e:
             self.get_logger().error(f"Error in destructor: {e}")
 
-    def shutdown(self):
+    def shutdownlaunchfile(self):
         """
         Shutdowns the module safely
         """

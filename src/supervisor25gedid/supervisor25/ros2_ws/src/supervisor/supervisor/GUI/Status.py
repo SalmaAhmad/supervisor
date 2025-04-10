@@ -136,11 +136,12 @@ class NodeStatusGUI(Node):
         with self.lock:
             self.tree.delete(*self.tree.get_children())
             for node_name, (status, last_heartbeat, last_received_time) in self.node_data.items():
+                # Check if the node is inactive
                 if time.time() - last_received_time > INACTIVE_THRESHOLD:
-                    status = "inactive"
-                    last_heartbeat = "No heartbeat"
+                    continue  # Skip inserting inactive nodes
+
                 self.tree.insert("", "end", values=(node_name, status, last_heartbeat))
-        
+
         self.root.after(1000, self.update_gui)  # Update every second
 
     def run(self):
