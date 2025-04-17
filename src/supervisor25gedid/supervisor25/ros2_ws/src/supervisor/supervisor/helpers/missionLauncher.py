@@ -2,7 +2,7 @@ import os
 import json
 from typing import List, Dict, Optional
 from .intervalTimer import IntervalTimer
-import asyncio
+from supervisor.helpers.module import ModuleState
 import rclpy
 from rclpy.node import Node
 import time
@@ -11,15 +11,13 @@ from asurt_msgs.msg import NodeStatus
 from ament_index_python.packages import get_package_share_directory
 from .module import Module
 from .visualizer import Visualizer
-import subprocess
-import signal
-import threading
 from ament_index_python.packages import get_package_share_directory
 from std_msgs.msg import Bool
 from functools import partial
 from std_msgs.msg import Float32, String
 from rclpy.qos import QoSProfile, QoSDurabilityPolicy, QoSHistoryPolicy
 from ..nodes.subb import subb
+from asurt_msgs.msg import NodeStatus
 
 AMIToConfig = {
     CanState.AMI_DDT_INSPECTION_A: "staticA",
@@ -31,7 +29,7 @@ AMIToConfig = {
     CanState.AMI_TRACK_DRIVE: "trackDrive",
 }
 
-
+"""
 def map_state_to_int(state_str: str) -> int:
     state_map = {
         "starting": 0,
@@ -42,7 +40,7 @@ def map_state_to_int(state_str: str) -> int:
         "unresponsive": 5
     }
     return state_map.get(state_str.lower(), -1)  # Return -1 if the state string is not found
-
+"""
 
 class MissionLauncher(Node):
     def __init__(self) -> None:
@@ -99,49 +97,59 @@ class MissionLauncher(Node):
 
         for i in config["modules"]:
             self.modules.append(
-                Module(i["pkg"], i["launch_file"], i["heartbeats_topic"], bool(i["is_node_msg"]))
+                Module( i["pkg"], i["launch_file"], i["heartbeats_topic"], bool(i["is_node_msg"]),shutdown_callback=self.handle_module_shutdown ,restart_callback=self.handle_module_restart )
             )
 
         for idx, module in enumerate(self.modules):
             module.launch()
        
-
+    
     def shutdown(self) -> None:
         for module in self.modules:
-            module.shutdown()
+            module.shutdownmodule()
+            module.shutdownlaunchfile()
 
         self.missionType = "Not Selected"
         self.isLaunched = False
         self.modules = []
          
-    from asurt_msgs.msg import NodeStatus
+    def handle_module_shutdown(self):
+        self.get_logger().info(" Shutdown callback triggered by module")
+        self.shutdown()
 
 
+    def restart(self)-> None:
+        for module in self.modules:
+            try:
+                self.shutdown
+                self.launch
+            except Exception as e:
+                self.get_logger().error(f"Error during restart: {e}")
+                self.state = ModuleState.Error
+    
+    def handle_module_restart(self):
+        self.get_logger().info(" restart callback triggered by module")
+        self.restart()
 
     def isReady(self) -> bool:
         '''
         Checks if all modules are ready
         '''
-        self.get_logger().info(f"DEBUG: isReady() called. Modules count: {len(self.modules)}")  # Print module count
+        self.get_logger().info(f"called isready and no. of modules is {len(self.modules)}")  # Print module count
         if not self.modules:
             self.get_logger().info("ERROR: self.modules is EMPTY! No modules have been added.")
-            return False  # If no modules exist, return False
+            return False  
         
         for module in self.modules:
-            # Map the module state to its corresponding integer
-            mapped_state = map_state_to_int(module.state)
 
-            # Log debug information
-            self.get_logger().info(f"Module {module.pkg} state: {module.state} (mapped integer: {mapped_state})")
-
-            # Compare against the integer representation of RUNNING (2)
-            if module.hasHeartbeat and mapped_state != NodeStatus.RUNNING:
+            self.get_logger().info(f"Module {module.pkg} state: {module.state}")
+            if module.hasHeartbeat and module.state != ModuleState.Ready:
                 self.get_logger().info(f"Module {module.pkg} is not ready (current state: {module.state})")
                 return False  # Not ready
 
         return True  # All modules are ready
 
-
+"""
     def update(self) -> None:
         '''
         Updates the mission launcher
@@ -154,7 +162,7 @@ class MissionLauncher(Node):
         ]
 
         states = ["starting", "ready", "RUNNING", "error", "shutdown", "unreponsive"]
-
+"""
     #main
 def main(args=None):
     rclpy.init(args=args)
