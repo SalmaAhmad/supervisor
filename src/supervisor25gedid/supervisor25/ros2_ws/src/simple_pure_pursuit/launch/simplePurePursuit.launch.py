@@ -18,7 +18,7 @@ def generate_launch_description():
                 namespace="",
                 executable="simple_pp_node",
                 name="Simple_Pure_Pursuit",
-                
+                output="screen",
                 # parameters=[base_path+'/config/params.yaml']
             ),
             # Node(

@@ -72,11 +72,11 @@ class Supervisor(Node):  # pylint: disable=too-many-instance-attributes
         """
         Do the state machine transitions and actions
         """
-
+        """
         # Update launcher
         if self.superState != SuperState.WAITING:
             self.launcher.update()
-
+        """
         # Do transitions
         if self.superState == SuperState.WAITING:
             if self.amiState != CanState.AMI_NOT_SELECTED:

@@ -121,8 +121,8 @@ class MissionLauncher(Node):
     def restart(self)-> None:
         for module in self.modules:
             try:
-                self.shutdown
-                self.launch
+                self.shutdown()
+                self.launch()
             except Exception as e:
                 self.get_logger().error(f"Error during restart: {e}")
                 self.state = ModuleState.Error
@@ -143,7 +143,8 @@ class MissionLauncher(Node):
         for module in self.modules:
 
             self.get_logger().info(f"Module {module.pkg} state: {module.state}")
-            if module.hasHeartbeat and module.state != ModuleState.Ready:
+            if module.hasHeartbeat and module.state not in (ModuleState.Ready, ModuleState.Running):
+            #if module.state not in (ModuleState.Ready, ModuleState.Running):  
                 self.get_logger().info(f"Module {module.pkg} is not ready (current state: {module.state})")
                 return False  # Not ready
 
@@ -152,7 +153,11 @@ class MissionLauncher(Node):
 """
     def update(self) -> None:
         '''
-        Updates the mission launcher
+        f
+        Updates the visualizer for all modules along with adding extra information
+        Current extra information:
+        - Mission Type (static A, static B, etc)
+        
         '''
         if not self.isLaunched or not self.visualizer:
             return
@@ -164,12 +169,23 @@ class MissionLauncher(Node):
         states = ["starting", "ready", "RUNNING", "error", "shutdown", "unreponsive"]
 """
     #main
+
 def main(args=None):
     rclpy.init(args=args)
-    node = MissionLauncher()
-    rclpy.spin(node)
-    node.shutdown()
-    rclpy.shutdown()
+    try:
+        node = MissionLauncher()
+        print("✅ Supervisor initialized.")
+        rclpy.spin(node)
+        print("⚠️ spin() returned — this should not happen unless node shut down.")
+    except Exception as e:
+        print(f"❌ Supervisor crashed with error: {e}")
+        import traceback
+        traceback.print_exc()
+    finally:
+        print("🛑 Shutting down Supervisor.")
+        #node.shutdown()
+        #rclpy.shutdown()  #trying to revive spp
+
 
 if __name__ == "__main__":
     main()

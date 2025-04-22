@@ -20,20 +20,21 @@ from rclpy.node import Node
 
 class ModuleState(Enum):
     """
-    Enum class for the supervisor's state
-     "starting": 0,
-        "ready": 1,
-        "running": 2,
-        "error": 3,
-        "shutdown": 4,
-        "unresponsive": 5
-    }
+    Enum class for the module's state:
+        Starting     = 0
+        Ready        = 1
+        Running      = 2
+        Error        = 3
+        Shutdown     = 4
+        Unresponsive = 5
     """
-    Ready = 1
-    Running = 2
-    Error = 3
-    Shutdown =4
-
+    Starting     = 0
+    Ready        = 1
+    Running      = 2
+    Error        = 3
+    Shutdown     = 4
+    Unresponsive = 5
+    
 class Module(Node):  # Module should inherit from Node properly
     """
     Launches a module (launch file) and checks if it is alive using the optional heartbeat topic
@@ -67,7 +68,8 @@ class Module(Node):  # Module should inherit from Node properly
         self.launch_process =None
         self.last_heartbeat_time = self.get_clock().now().seconds_nanoseconds()[0]
         self.heartbeat_count = 0.0
-        self.new_heartbeat_rate=0.0 
+        self.new_heartbeat_rate=0.0
+        self.ModuleState = ModuleState.Ready #i added it to fix the isready func  
         try:
             # Ensure package and launch file are not None
             assert self.pkg is not None and self.launchFile is not None
@@ -156,14 +158,14 @@ class Module(Node):  # Module should inherit from Node properly
 
             beta = 0.3  # Smoothing factor
             self.rate = beta * self.rate + (1.0 - beta) * new_heartbeat_rate
-            
+            """
             if new_heartbeat_rate < 1:
                 #self.get_logger().warn("❌ Node marked as UNRESPONSIVE. Restarting...")
                 self.state=ModuleState.Error
                 self.get_logger().info(f"will now shutdown")
                 if self.shutdown_callback:
                     self.shutdown_callback()  # 👈 call the function provided by MissionLauncher
-                
+            """  
             
         except Exception as e:
             self.get_logger().error(f"Error updating heartbeat rate: {e}")
@@ -190,11 +192,11 @@ class Module(Node):  # Module should inherit from Node properly
 
             self.get_logger().info(f"Launched {self.pkg}/{self.launchFile} (PID: {self.launch_process.pid})")
             self.state= ModuleState.Running
-
+            """
             if self.hasHeartbeat:
                 # Start a heartbeat thread
                 self.heartbeat_thread = self.start_heartbeat()
-
+            """
         except Exception as e:
             self.get_logger().error(f"Failed to launch module: {e}")
             self.state = ModuleState.Error
@@ -229,7 +231,7 @@ class Module(Node):  # Module should inherit from Node properly
                 self.get_logger().info(f"han2fel  launch process ( {self.launch_process})")
                 self.launch_process.terminate()
                 self.launch_process.wait()
-                self.get_logger().info("Launch process shut down successfully")
+                self.get_logger().info("Launch process shut down successfully")te
                 self.state = ModuleState.SHUTDOWN
             except Exception as e:
                 self.get_logger().error(f"Error during shutdown: {e}")

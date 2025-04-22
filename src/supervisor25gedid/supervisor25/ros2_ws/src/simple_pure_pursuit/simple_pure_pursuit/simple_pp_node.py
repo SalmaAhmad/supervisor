@@ -41,8 +41,8 @@ class SimplePurePursuitNode(Node):  # type: ignore[misc]
         self.statusPub = StatusPublisher("status/simple_pure_pursuit", self)
         self.statusPub.starting()
         self.statusPub.ready()
-        self.create_subscription(Path, pathTopic, self.pathCallback, 10)
-        self.create_timer(0.01, self.testing)
+        # self.create_subscription(Path, pathTopic, self.pathCallback, 10)
+        # self.create_timer(0.01, self.testing)
         # self.create_timer(0.01, self.controller.run)
 
 
@@ -131,8 +131,10 @@ def main(args=None) -> None:  # type: ignore[no-untyped-def]
 
     # status.starting()
     # status.ready()
-    rclpy.spin(simplePPNode)
-    rclpy.shutdown()
+    try:
+        rclpy.spin(simplePPNode)
+    finally:
+        rclpy.shutdown()
     # while rclpy.ok:
         
     #     rate.sleep()

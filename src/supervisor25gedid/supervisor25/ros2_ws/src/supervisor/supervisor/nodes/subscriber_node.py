@@ -42,7 +42,7 @@ def main(args=None):
     rclpy.spin(node)
 
     node.destroy_node()
-    rclpy.shutdown()
+    #rclpy.shutdown() trying to revive spp
 
 if __name__ == '__main__':
     main()

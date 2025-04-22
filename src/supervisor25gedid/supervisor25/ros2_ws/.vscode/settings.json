@@ -1,3 +1,39 @@
 {
-    "cmake.sourceDirectory": "/home/hazem/alaafinal/alaafinalfinalfinal/alaa/ros2_ws/build/ackermann_msgs/ackermann_msgs__py"
+    "cmake.sourceDirectory": "/home/hazem/alaafinal/alaafinalfinalfinal/alaa/ros2_ws/build/ackermann_msgs/ackermann_msgs__py",
+    "python.autoComplete.extraPaths": [
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/supervisor/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/simple_pure_pursuit/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/planning_acceleration/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/tf_helper/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/eufs_msgs/local/lib/python3.10/dist-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/asurt_msgs/local/lib/python3.10/dist-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/ackermann_msgs/local/lib/python3.10/dist-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/supervisor/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/simple_pure_pursuit/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/planning_acceleration/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/tf_helper/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/eufs_msgs/local/lib/python3.10/dist-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/asurt_msgs/local/lib/python3.10/dist-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/ackermann_msgs/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/supervisor/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/simple_pure_pursuit/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/planning_acceleration/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/tf_helper/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/eufs_msgs/local/lib/python3.10/dist-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/asurt_msgs/local/lib/python3.10/dist-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/install/ackermann_msgs/local/lib/python3.10/dist-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/supervisor/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/simple_pure_pursuit/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/planning_acceleration/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/tf_helper/lib/python3.10/site-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/eufs_msgs/local/lib/python3.10/dist-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/asurt_msgs/local/lib/python3.10/dist-packages",
+        "/home/salma/ros2_ws/src/supervisor25gedid/supervisor25/ros2_ws/src/install/ackermann_msgs/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
 }
