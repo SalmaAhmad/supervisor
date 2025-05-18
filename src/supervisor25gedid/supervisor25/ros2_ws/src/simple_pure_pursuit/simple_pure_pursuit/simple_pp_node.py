@@ -42,7 +42,7 @@ class SimplePurePursuitNode(Node):  # type: ignore[misc]
         self.statusPub.starting()
         self.statusPub.ready()
         # self.create_subscription(Path, pathTopic, self.pathCallback, 10)
-        # self.create_timer(0.01, self.testing)
+        self.create_timer(0.01, self.statusPub.running)
         # self.create_timer(0.01, self.controller.run)
 
 

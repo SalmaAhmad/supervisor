@@ -231,7 +231,7 @@ class Module(Node):  # Module should inherit from Node properly
                 self.get_logger().info(f"han2fel  launch process ( {self.launch_process})")
                 self.launch_process.terminate()
                 self.launch_process.wait()
-                self.get_logger().info("Launch process shut down successfully")te
+                self.get_logger().info("Launch process shut down successfully")
                 self.state = ModuleState.SHUTDOWN
             except Exception as e:
                 self.get_logger().error(f"Error during shutdown: {e}")

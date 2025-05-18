@@ -43,25 +43,37 @@ def map_state_to_int(state_str: str) -> int:
 """
 
 class MissionLauncher(Node):
+    # Class variables for singleton pattern
+    _instance = None
+    _initialized = False
+    
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super(MissionLauncher, cls).__new__(cls)
+        return cls._instance
+    
     def __init__(self) -> None:
-        super().__init__('mission_launcher_node')
-        self.missionType = "Not Selected"
-        self.isLaunched = False
-        self.modules: List[Module] = []
-        self.terminal_processes = []  # Change to a list to store process IDs
-        self.lastHeartbeatTime = time.time()
-        self.heartbeatCount = 0
-        self.drivinfgFlagPub = self.create_publisher(Bool, '/supervisor/driving_flag', 10)
-        self.rate = 0
-        self.state = NodeStatus.SHUTDOWN
-        
-        """ self.state_simple_pure_pursuit = NodeStatus.SHUTDOWN
-        self.heartbeatCountsimple_pure_pursuit = 0
+        # Only initialize once using the singleton pattern
+        if not MissionLauncher._initialized:
+            super().__init__('mission_launcher_node')
+            self.missionType = "Not Selected"
+            self.isLaunched = False
+            self.modules: List[Module] = []
+            self.terminal_processes = []  # Change to a list to store process IDs
+            self.lastHeartbeatTime = time.time()
+            self.heartbeatCount = 0
+            self.drivinfgFlagPub = self.create_publisher(Bool, '/supervisor/driving_flag', 10)
+            self.rate = 0
+            self.state = NodeStatus.SHUTDOWN
+            MissionLauncher._initialized = True
+            
+            """ self.state_simple_pure_pursuit = NodeStatus.SHUTDOWN
+            self.heartbeatCountsimple_pure_pursuit = 0
 
-        self.state_accerleration = NodeStatus.SHUTDOWN
-        self.heartbeatCountaccerleration = 0
-        """
-     
+            self.state_accerleration = NodeStatus.SHUTDOWN
+            self.heartbeatCountaccerleration = 0
+            """
+            self.get_logger().info("MissionLauncher singleton instance initialized")
 
     def openConfig(self, fileName: str) -> Dict[str, List[Dict[str, str]]]:
         '''
@@ -171,21 +183,19 @@ class MissionLauncher(Node):
     #main
 
 def main(args=None):
-    rclpy.init(args=args)
-    try:
-        node = MissionLauncher()
-        print("✅ Supervisor initialized.")
-        rclpy.spin(node)
-        print("⚠️ spin() returned — this should not happen unless node shut down.")
-    except Exception as e:
-        print(f"❌ Supervisor crashed with error: {e}")
-        import traceback
-        traceback.print_exc()
-    finally:
-        print("🛑 Shutting down Supervisor.")
-        #node.shutdown()
-        #rclpy.shutdown()  #trying to revive spp
-
-
-if __name__ == "__main__":
-    main()
+    # Ensure this script only runs when executed directly
+    if __name__ == "__main__":
+        rclpy.init(args=args)
+        try:
+            node = MissionLauncher()
+            print("✅ Supervisor initialized.")
+            rclpy.spin(node)
+            print("⚠️ spin() returned — this should not happen unless node shut down.")
+        except Exception as e:
+            print(f"❌ Supervisor crashed with error: {e}")
+            import traceback
+            traceback.print_exc()
+        finally:
+            print("🛑 Shutting down Supervisor.")
+            #node.shutdown()
+            #rclpy.shutdown()  #trying to revive spp
